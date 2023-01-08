@@ -31,8 +31,7 @@ const adminSchema = new mongoose.Schema({
         minlength: 8
     },
     adminHashedPassword: {
-        type: String,
-        minlength: 8
+        type: String
     }
 })
 adminSchema.post('save',(error,doc,next)=>{
