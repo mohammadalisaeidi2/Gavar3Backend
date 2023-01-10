@@ -26,6 +26,10 @@ const adminSchema = new mongoose.Schema({
         uniqe: true
 
     },
+    creationDate: {
+        type: Date,
+        default:Date.now
+    },
     adminPassword: {
         type: String,
         minlength: 8

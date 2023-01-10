@@ -3,7 +3,7 @@ dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import useragent from 'express-useragent';
-import {adminRouter} from './routers';
+import {adminRouter,userRouter} from './routers';
 
 console.log("Hi") ;
 
@@ -16,12 +16,11 @@ mongoose.connect(
     .catch((e) => {
         console.log("Error :",e);
     });
-    mongoose.connection.on('connected', () => console.log('Connecteddddddddddddddddddddddddddddddddd'));
 
 const app = express();
 app.use(express.json());
 app.use(useragent.express());
-app.use("/",[adminRouter]);
+app.use("/",[adminRouter,userRouter]);
 
 
 

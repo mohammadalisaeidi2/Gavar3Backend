@@ -1,5 +1,11 @@
 import check from 'string-sanitizer' ;
 
+export const userRegisterSanitization = (req, res, next) => {
+    console.log("---USER REGISTER Sanitization---")
+    req.body.userName = check.sanitize(req.body.userName);
+    req.body.userFamily = check.sanitize(req.body.userFamily);
+    next()
+}
 
 export const studentRegisterSanitization = (req,res,next) =>{
     console.log("studentRegisterSanitization");

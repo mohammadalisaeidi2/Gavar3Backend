@@ -16,7 +16,7 @@ const router = new express.Router();
 try {
     router.post('/admin/login', [adminLoginSanitization, adminLoginValidation], adminLogin);
     router.post('/admin/register', [], adminRegister);
-    router.post('/admin/createslideshow',[],createSlideShow);
+    //router.post('/admin/createslideshow',[],createSlideShow);
 } catch (error) {
     console.log(error)
 }
