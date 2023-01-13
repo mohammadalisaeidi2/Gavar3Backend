@@ -37,7 +37,7 @@ const adminSchema = new mongoose.Schema({
     adminHashedPassword: {
         type: String
     }
-})
+},{timestamps :true})
 adminSchema.post('save',(error,doc,next)=>{
     (error.name==='MongoError'&&error.code===11000)?next(new JoiError("Unique Item AdminsDB","Username is repetitive",44,404,{"pointer":"/admin/register","parameter":"req.data"})):next()
 })

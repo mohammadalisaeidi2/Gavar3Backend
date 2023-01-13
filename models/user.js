@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema({
     userHashedPassword: {
         type: String
     }
-})
+},{timestamps :true})
 userSchema.post('save',(error,doc,next)=>{
     (error.name==='MongoError'&&error.code===11000)?next(new JoiError("Unique Item AdminsDB","Email is repetitive",44,404,{"pointer":"/user/register","parameter":"req.data"})):next()
 })

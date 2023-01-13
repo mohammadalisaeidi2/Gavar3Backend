@@ -2,6 +2,7 @@ import express from 'express';
 import {adminLogin, adminRegister} from '../controllers/adminController';
 import {adminLoginValidation} from "../middlewares/validation";
 import {adminLoginSanitization} from "../middlewares/sanitization";
+import { verifyTokenAndAdmin } from '../middlewares/authorization';
 import { createSlideShow } from '../controllers/adminController';
 import authorization from "../middlewares/authorization";
 import JoiError from "../Exceptions/validationError";

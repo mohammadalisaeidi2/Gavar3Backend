@@ -1,21 +1,37 @@
 import jwt from "jsonwebtoken";
 import validationError from '../Exceptions/validationError'
-export default (req, res, next) => {
+
+
+export const verifyToken = (req, res, next) => {
+    console.log("-----Verify Token --------")
+    const token = req.headers.token;
+    if (token) {
+      jwt.verify(token, process.env.HASHED, (err, user) => {
+        if (err) res.status(403).json("Token is not valid!");
+        req.user = user;
+        next();
+      });
+    } else {
+      return res.status(401).json("You are not authenticated!");
+    }
+  };
+
+export const verifyTokenAndAdmin = (req, res, next) => {
     try {
-        console.log("----authorization----")
-        const token = req.headers["auth-token"];
-        if (!token) {
-           return res.status(401).send(new validationError("TokenError","Your token is not  authorized!",41,401,{ pointer: req.path, parameter: 'data.token' }))
-        } else {
-            jwt.verify(token, process.env.HASHED, (error, Token) => {
-                if (error) {
-                    next(new validationError("TokenError","Your token is not  authorized!",41,401,{ pointer: req.path, parameter: 'data.token' }))
-                }
-                req.user = Token
-                next()
-            })
-        }
+        console.log("----verify Token AND ADMIN----")
+        verifyToken(req, res, () =>{
+            if(req.user.isAdmin){
+                next();
+            }else{
+                res.status(403).json("You are should be ADMIN to do that");
+            }
+        });
     } catch (e) {
         next(e)
     }
 }
+
+
+
+
+

@@ -10,7 +10,7 @@ const slideShowSchema = new mongoose.Schema({
         data: Buffer,
         contentType: String
     }
-})
+},{timestamps :true})
 
 slideShowSchema.post('save',(error,doc,next)=>{
 

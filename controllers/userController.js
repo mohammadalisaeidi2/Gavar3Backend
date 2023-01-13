@@ -10,7 +10,7 @@ export const userLogin = (req, res, next) => {
         console.log("-----USER Login-----");
         User.findOne({ userEmail: req.body.userEmail }, ((error, user) => {
             error ? console.log(error) : user ? bcrypt.compare(req.body.userPassword, user.userHashedPassword, (error, result) => {
-                error ? console.log(error) : result ? jwt.sign({ _id: user._id }, process.env.HASHED, { expiresIn: '20m' }, (error, token) => {
+                error ? console.log(error) : result ? jwt.sign({ _id: user._id,isAdmin:false }, process.env.HASHED, { expiresIn: '20m' }, (error, token) => {
                     error ? console.log(error) : token ? res.header("auth-token", token).send(token) : console.log(token)
                 }) : res.status(401).send("your Email or password isn't correct")
             }) : res.status(401).send("you are not authorized!")
