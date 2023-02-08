@@ -22,6 +22,7 @@ export const userLogin = (req, res, next) => {
 
 
 
+
 export const userRegister = async (req, res, next) => {
     try {
         console.log("-----User Register-----");
@@ -45,4 +46,19 @@ export const userRegister = async (req, res, next) => {
         next(e)
     }
 };
+
+
+
+//GET one USER
+export const getuser = async (req, res, next) => {
+    try {
+        console.log("-----GET ONE USER INFO -----");
+        console.log(req.params.id)
+        const user = await User.findById(req.params.id);
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+};
+
 

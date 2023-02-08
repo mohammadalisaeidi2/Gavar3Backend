@@ -1,5 +1,6 @@
 import Product from '../models/products';
 
+
 //TODO
 //Add availablity
 //Remove availablity
@@ -36,8 +37,8 @@ export const addProduct = async (req, res, next) => {
             productSex,
             productHasStone,
             productScore
-        }, (error) => {
-            error ? next(error) : res.status(200).send({"message": "Product added succesfully !!"})
+        }, (error,product) => {
+            error ? next(error) : res.status(200).json(product._id)
         })
     } catch (e) {
         next(e)
@@ -235,6 +236,25 @@ export const deleteAvailblity = async (req, res, next) => {
                 else {
                     res.status(200).json("AVALABLITY deleted succesfully!")}
             })
+    } catch (e) {
+        next(e);
+    }
+};
+
+
+
+
+
+export const uploadOneImage = async (req, res, next) => {
+    try {
+        console.log("-----UPLOAD TEST-----");
+        console.log(req.file.filename)
+        Product.findOneAndUpdate({_id:req.headers.lastid},
+            {$push: {productImages:req.file.filename}},
+            {},function(err,product){
+
+        });
+
     } catch (e) {
         next(e);
     }

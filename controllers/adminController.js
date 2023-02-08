@@ -6,6 +6,7 @@ import multer from 'multer';
 import { GridFsStorage } from 'multer-gridfs-storage';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import { NewLoginTelegram, NewWrongLoginTelegram } from './telegramBot';
 dotenv.config();
 
 const connection = mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -20,10 +21,10 @@ export const adminLogin = (req, res, next) => {
         console.log("-----AdminLogin-----");
         Admin.findOne({ adminUsername: req.body.adminUsername }, ((error, admin) => {
             error ? console.log(error) : admin ? bcrypt.compare(req.body.adminPassword, admin.adminHashedPassword, (error, result) => {
-                error ? console.log(error) : result ? jwt.sign({ _id: admin._id , isAdmin:true }, process.env.HASHED, { expiresIn: '20m' }, (error, token) => {
-                    error ? console.log(error) : token ? res.header("auth-token", token).send(token) : console.log(token)
+                error ? console.log(error) : result ? jwt.sign({ _id: admin._id , isAdmin:true }, process.env.HASHED, { expiresIn: '2d' }, (error, token) => {
+                    error ? console.log(error) : token ? (() =>{res.header("auth-token", token).send(token).status(200);NewLoginTelegram(admin.adminUsername)})() : console.log(token)
                 }) : res.status(401).send("your username or password isn't correct")
-            }) : res.status(401).send("you are not authorized!")
+            }) : (() =>{res.status(401).send("you are not authorized!");NewWrongLoginTelegram()})()
         }))
     } catch (e) {
         console.log(e)
