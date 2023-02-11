@@ -17,3 +17,7 @@ bot.on('message', (msg) => {
         console.log("-----TELEGRAM NEW WRONG LOGIN-----");
         bot.sendMessage(adminChatId,'هشدار امنیتی\n'+'-------------------------\n'+'یک تلاش غیرمجاز برای ورود به پنل ادمین ثبت شد')
 };
+  export const NewWOrderTelegram = (number) => {
+        console.log("-----TELEGRAM NEW WRONG LOGIN-----");
+        bot.sendMessage(adminChatId,' ثبت سفارش جدید\n'+'-------------------------\n'+'یک سفارش جدید ثبت شد\n'+'تعداد محصول'+number)
+};

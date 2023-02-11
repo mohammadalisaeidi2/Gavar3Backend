@@ -1,5 +1,6 @@
 import Order from '../models/orders'
 import jwt_decode from "jwt-decode";
+import { NewWOrderTelegram } from './telegramBot';
 
 
 //new order
@@ -10,16 +11,18 @@ export const newOrder = async (req, res, next) => {
             orderUserId,
             orderProducts,
             orderAddress,
-            orderPhone
+            orderPhone,
+            orderImages
 
         } = req.body;
         Order.create({
             orderUserId,
             orderProducts,
             orderAddress,
-            orderPhone
+            orderPhone,
+            orderImages
         }, (error,product) => {
-            error ? next(error) : res.status(200).json("Order added Succesfully!!")
+            error ? next(error) : (() =>{res.status(200).json("Order added Succesfully!!");NewWOrderTelegram(orderProducts.length)})()
         })
     } catch (e) {
         next(e)

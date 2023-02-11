@@ -11,6 +11,7 @@ const corsOptions={
     origin:["http://157.90.108.145:4000/",
         "http://91.251.68.132:3000/",
         "http://192.168.1.17:3000",
+        "http://192.168.1.16:3000",
         "http://localhost:3000",],
     methods: ['GET','POST',"PUT","DELETE"]
 }

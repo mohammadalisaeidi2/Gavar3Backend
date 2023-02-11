@@ -4,6 +4,7 @@ import {adminLogin, adminRegister} from '../controllers/adminController';
 import {adminLoginValidation ,userLoginValidation} from "../middlewares/validation";
 import {adminLoginSanitization ,userRegisterSanitization} from "../middlewares/sanitization";
 import { userRegisterValidation } from '../middlewares/validation';
+import { getAllUsers } from '../controllers/userController';
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -12,6 +13,7 @@ try {
     router.post('/user/login', [userLoginValidation], userLogin);
     router.post('/user/register', [userRegisterSanitization, userRegisterValidation], userRegister);
     router.get('/user/find/:id', [] ,getuser);
+    router.get('/user/getall/', [] ,getAllUsers);
 } catch (error) {
     console.log(error)
 }

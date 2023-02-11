@@ -62,3 +62,15 @@ export const getuser = async (req, res, next) => {
 };
 
 
+
+
+//GET ALL USERS
+export const getAllUsers = async (req, res, next) => {
+    try {
+        console.log("-----GET ALL USERS -----");
+        const users = await User.find();
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+};
